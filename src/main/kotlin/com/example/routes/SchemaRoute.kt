@@ -17,9 +17,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
+
 
 fun Application.schemaRouting() {
     val dao = SchemeDaoImpl()
@@ -48,7 +46,8 @@ fun Application.schemaRouting() {
             val response = client.get("https://api.mfapi.in/mf/${sIdReq.schemeId.toString()}").bodyAsText()
             val infoById: SchemeDetailsById = Gson().fromJson(response, SchemeDetailsById::class.java)
             val filter = sIdReq.filter.toString()
-            filterWithDates(filter, infoById)?.let {call.respond(myResponse("success", infoById, ""))  }?: call.respond(myResponse("success", infoById, ""))
+            filterWithDates(filter, infoById).takeIf { it.data.isNotEmpty() }?.let {
+                    call.respond(myResponse("success", infoById, "")) }?:call.respond(myResponse("success", "", "invalid id"))
         }
 
 
