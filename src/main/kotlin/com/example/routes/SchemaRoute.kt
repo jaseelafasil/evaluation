@@ -42,12 +42,15 @@ fun Application.schemaRouting() {
         }
         post(GET_SCHEME_BY_ID) {
             val sIdReq = call.receive<SearchRequestById>()
-            val client = HttpClient(Apache5)
-            val response = client.get("https://api.mfapi.in/mf/${sIdReq.schemeId.toString()}").bodyAsText()
-            val infoById: SchemeDetailsById = Gson().fromJson(response, SchemeDetailsById::class.java)
-            val filter = sIdReq.filter.toString()
-            filterWithDates(filter, infoById).takeIf { it.data.isNotEmpty() }?.let {
-                    call.respond(myResponse("success", infoById, "")) }?:call.respond(myResponse("success", "", "invalid id"))
+            dao.validateSchemeId(sIdReq.schemeId.toString())?.let {
+                val client = HttpClient(Apache5)
+                val response = client.get("https://api.mfapi.in/mf/${sIdReq.schemeId.toString()}").bodyAsText()
+                val infoById: SchemeDetailsById = Gson().fromJson(response, SchemeDetailsById::class.java)
+                val filter = sIdReq.filter.toString()
+                filterWithDates(filter, infoById).takeIf { it.data.isNotEmpty() }?.let {
+                    call.respond(myResponse("success", infoById, ""))
+                } ?: call.respond(myResponse("success", "", "no data available"))
+            }?:call.respond(myResponse("success", "", "invalid id"))
         }
 
 

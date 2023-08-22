@@ -1,6 +1,5 @@
 package com.example.data.database.tables
 
-
 import com.example.data.models.SchemeDetails
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -13,8 +12,8 @@ object SchemeTable:IntIdTable("schemes"){
 }
 class SchemeTableEntity(id:EntityID<Int>): IntEntity(id){
     companion object: IntEntityClass<SchemeTableEntity>(SchemeTable)
-    var schemaCode by SchemeTable.schemeCode
-    var schemaName by SchemeTable.schemeName
+    var schemeCode by SchemeTable.schemeCode
+    var schemeName by SchemeTable.schemeName
 
 }
-fun SchemeTableEntity.toSchemeDetails()=SchemeDetails(schemaCode,schemaName)
+fun SchemeTableEntity.toSchemeDetails()=SchemeDetails(schemeCode,schemeName)

@@ -12,8 +12,8 @@ class SchemeDaoImpl :SchemeDao{
                 schemeDetails.forEach { scheme ->
                     println("data is adding ************************")
                     SchemeTableEntity.new {
-                        schemaCode = scheme.schemeCode
-                        schemaName = scheme.schemeName
+                        schemeCode = scheme.schemeCode
+                        schemeName = scheme.schemeName
                     }
                 }
         }
@@ -22,6 +22,10 @@ class SchemeDaoImpl :SchemeDao{
 
     override suspend fun searchSchemeByName(sName: String): List<SchemeDetails> = dbQuery {
         SchemeTableEntity.find { SchemeTable.schemeName.like("%$sName%") }.map { it.toSchemeDetails() }
+    }
+
+    override suspend fun validateSchemeId(schemeId: String): SchemeTableEntity? = dbQuery {
+        SchemeTableEntity.find { SchemeTable.schemeCode eq schemeId }.firstOrNull()
     }
 
 }
