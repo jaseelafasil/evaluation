@@ -48,8 +48,7 @@ fun Application.schemaRouting() {
             val response = client.get("https://api.mfapi.in/mf/${sIdReq.schemeId.toString()}").bodyAsText()
             val infoById: SchemeDetailsById = Gson().fromJson(response, SchemeDetailsById::class.java)
             val filter = sIdReq.filter.toString()
-            filterWithDates(filter, infoById)?.let {call.respond(myResponse("success", infoById, ""))  }?: call.respond(myResponse("success", infoById, ""))
-        }
+            filterWithDates(filter, infoById).let {call.respond(myResponse("success", infoById, ""))}
 
 
     }
