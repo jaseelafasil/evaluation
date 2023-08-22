@@ -17,4 +17,4 @@ class SchemeTableEntity(id:EntityID<Int>): IntEntity(id){
     var schemaName by SchemeTable.schemeName
 
 }
-fun SchemeTableEntity.toSchemeDetails()=SchemeDetails(schemaCode,schemaName)
+fun SchemeTableEntity.toSchemeDetails()=SchemeDetails(schemeCode,schemeName)
