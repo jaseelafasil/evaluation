@@ -6,7 +6,7 @@ val h2_version : String by project
 val exposed_version : String by project
 val hikaricp_version: String by project
 val ehcache_version: String by project
-
+val koin_version = "3.2.0-beta-1"
 plugins {
     kotlin("jvm") version "1.9.0"
     id("io.ktor.plugin") version "2.3.2"
@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-
+    implementation ("io.insert-koin:koin-ktor:3.2.0")
     implementation ("com.google.code.gson:gson:2.8.5")
     implementation("com.zaxxer:HikariCP:$hikaricp_version")
     implementation("org.ehcache:ehcache:$ehcache_version")
@@ -52,4 +52,5 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:0.30.1")
     implementation("io.ktor:ktor-server-request-validation:$ktor_version")
     implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    implementation ("io.insert-koin:koin-logger-slf4j:3.2.0")
 }
