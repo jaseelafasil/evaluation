@@ -21,8 +21,7 @@ fun SchemeTableEntity.toSchemeDetails():SchemeDetails= SchemeDetails(schemeCode,
                         schemeName = scheme.schemeName
                     }
                 }
-       // }
-        delay(60000)
+
         "Scheme details available"
     }
 
